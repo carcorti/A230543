@@ -1,0 +1,1050 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,longtable,array}
+\setlength{\emergencystretch}{1em}
+\usepackage{xcolor}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue]{hyperref}
+\newcommand{\D}{\operatorname{D}}
+\newcommand{\Lrate}{\operatorname{L}}
+\newcommand{\NN}{\mathbb{N}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\title{An Exact Local Extension and Homothetic Classes for OEIS A230543}
+\author{Carlo Corti\\Independent researcher\\\texttt{carlo.corti@outlook.com}}
+\date{October 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+OEIS A230543 lists the positive integers whose first two arithmetic
+derivatives, together with the original integer, form the ordered legs of
+an integer Pythagorean quadruple. Starting from an accepted 22-term
+baseline, a complete C enumeration through $130000000000$ gives 18 further
+terms and a 40-term local prefix. This indexing relies on the accepted
+baseline and the program's negative coverage; a second independent
+enumeration of all negatives was not performed. All 40 positive witnesses
+were independently checked. We give a complete, elementary description of
+the integer scales preserving any admissible primitive ordered quadruple.
+The ten forms in the prefix comprise four infinite homothetic classes and
+six singleton classes. Explicit proofs identify the four infinite families,
+their narrower specializations and the singleton scales. Finite seed and
+prime-pattern studies are reported separately from global classification.
+The first unresolved term satisfies
+$130000000000<a(41)\le244140625000$, with an exact upper witness but no
+proved index for that witness. Historical logarithmic-derivative theory is
+used with conservative attribution.
+\end{abstract}
+
+\section{The sequence and the scope of the extension}\label{sec:intro}
+For nonnegative integers, the arithmetic derivative is defined by
+$\D(0)=\D(1)=0$ and
+\begin{equation}\label{eq:derivative}
+ \D(n)=\sum_{p^e\parallel n}e\frac{n}{p}\qquad(n\ge2),
+\end{equation}
+where $p$ ranges over primes. Its product rule and logarithmic derivative
+are classical~\cite{ufnarovski,kovic}. Throughout,
+$\D^2(n)=\D(\D(n))$ denotes composition, not a square.
+OEIS A230543~\cite{sequence} lists in increasing order, with offset one,
+the integers $n\ge2$ for which $\D(n),\D^2(n)>0$ and
+\begin{equation}\label{eq:predicate}
+ n^2+\D(n)^2+\D^2(n)^2=R^2,\qquad R\in\NN_{>0}.
+\end{equation}
+We call $W(n)=(n,\D(n),\D^2(n),R)$ a witness. No primitivity,
+coprimality, increasing order of the three legs, or membership in a
+particular family is required.
+
+The accepted OEIS baseline acquired on October 6, 2026 contains 22 terms,
+ending at $a(22)=408918816$. The entry is due to Paolo P. Lava, with
+terms 16--18 contributed by Giovanni Resta and terms 19--22 by Ray
+Chandler~\cite{sequence}. The present study adds 18 terms relative to that
+dated baseline. Attempts to retrieve the current A230543 internal entry
+and b-file during the final checks were unsuccessful; we therefore do not
+assert that all 18 are unpublished in the current public entry.
+
+The computational statement is a conditional exact extension: the
+accepted earlier indexing and complete negative coverage by the audited C
+program imply the indices displayed in Table~\ref{tab:prefix}.
+Independent trial-division checks establish membership of every positive
+witness, but do not independently reproduce the full negative enumeration.
+Section~\ref{sec:extension} separates these evidence scopes explicitly.
+
+The structural contribution is a self-contained scale criterion for a
+\emph{given} ordered primitive form, followed by its application to all
+ten forms observed in the prefix. Historical integer-rate theory is
+credited below. Ufnarovski and \AA hlander's Theorem 18~\cite{ufnarovski} already
+solves rational logarithmic-derivative equations and gives the squarefree
+denominator criterion. We restate its exponent decomposition in a
+positive-integer form, with canonical residues and nonnegative exponent
+increments, without a claim of absolute novelty. The
+Hoepli and Sandit books of Balzarotti and Lava~\cite{book,sandit} were
+not available in full for this study, limiting priority assessment.
+The overview by Tossavainen et al.~\cite{overview}, now consulted in
+full through an author-uploaded copy, surveys the history, elementary
+bounds and differential equations of the arithmetic derivative.
+No theorem is attributed to an unread book.
+
+\section{Historical tools and ordered primitive forms}\label{sec:tools}
+For $x>0$ put $\Lrate(x)=\D(x)/x$. Prime exponents in a product add,
+so~\eqref{eq:derivative} gives, without a coprimality hypothesis,
+\begin{equation}\label{eq:product}
+ \D(xy)=x\D(y)+y\D(x),\qquad
+ \Lrate(xy)=\Lrate(x)+\Lrate(y).
+\end{equation}
+The derivative is not additive: $\D(2)+\D(3)=2$, whereas $\D(5)=1$.
+For a prime $p$, $\D(p)=1$ and $\D^2(p)=0$; moreover
+$p^2<p^2+1<(p+1)^2$. Thus primes cannot satisfy the predicate.
+
+Kovi\v{c}'s Proposition 2~\cite{kovic} describes the positive integer
+solutions of $\D(t)=kt$, for an integer $k\ge1$, as
+$t=\prod_{j=1}^k p_j^{p_j}$, with repetitions permitted. The case $k=0$
+has only $t=1$. In particular, the fixed points $\D(t)=t$ are precisely
+$p^p$, recorded in A051674~\cite{derivatives}. The 2024 survey
+also documents the fixed-point question in the 1950 Putnam competition
+and Barbeau's 1961 derivative bounds~\cite{overview}. These historical
+scale factors will occur repeatedly.
+
+For an integer $\lambda\ge0$ define
+$T_\lambda(z)=\D(z)+\lambda z$ on nonnegative integers.
+If $\Lrate(t)=\lambda$, the product rule gives
+\begin{equation}\label{eq:iterate}
+ \D^j(tm)=tT_\lambda^j(m)\qquad(j\ge0).
+\end{equation}
+Indeed the claim holds at $j=0$; if $z=T_\lambda^j(m)$ is the current
+integer iterate, then $\D(tz)=t(\D(z)+\lambda z)$ establishes the next
+step. For rational $\lambda$ the same induction is valid along any
+chain whose displayed $T_\lambda$ iterates are integers; we do not apply
+an integer-domain operator to an unspecified noninteger iterate.
+This is product-rule induction, not a binomial expansion of an additive
+operator.
+
+\begin{definition}
+For a witness $W=gQ$, let
+$g=\gcd(n,\D(n),\D^2(n),R)$ and
+$Q=(m,u,v,w)=W/g$. The ordered quadruple $Q$, with
+$\gcd(m,u,v,w)=1$, is its primitive form. Its homothetic class is the set
+of witnesses $tQ$ with $t$ a positive integer.
+\end{definition}
+The normalization uses all four coordinates and preserves their order.
+The primitive form need not itself be a derivative witness.
+By the product rule,
+\begin{equation}\label{eq:shape}
+ \lambda=\Lrate(g)=\frac{u-\D(m)}{m},\qquad
+ \D(u)+\lambda u=v,\qquad m^2+u^2+v^2=w^2.
+\end{equation}
+
+\section{A complete scale criterion for a fixed form}\label{sec:scale}
+\begin{theorem}\label{thm:shape}
+Let $Q=(m,u,v,w)$ be the primitive form of a witness and let
+$\lambda$ be given by~\eqref{eq:shape}. A positive integer $t$ produces
+a witness $tQ$ if and only if $\Lrate(t)=\lambda$.
+No noninteger positive rational multiplier produces four integer
+coordinates from $Q$.
+\end{theorem}
+\begin{proof}
+The equality $\D(tm)=tu$ is equivalent, by~\eqref{eq:product}, to
+$\D(m)+m\Lrate(t)=u$ and hence to the stated rate condition.
+If it holds, $\D(tu)=t(\D(u)+\lambda u)=tv$ and
+$(tm)^2+(tu)^2+(tv)^2=(tw)^2$. All coordinates are positive. Also $tm\ge2$: otherwise $t=m=1$
+and the first derivative equality would give $u=\D(1)=0$, a
+contradiction. This proves necessity and sufficiency. If $a/b$ is reduced and
+$(a/b)Q$ is integral, then $b$ divides every coordinate of $Q$, so $b=1$.
+\end{proof}
+
+The squarefree-denominator criterion and the decomposition into an
+integer part plus prime-denominator fractions are classical
+\cite[Theorem 18]{ufnarovski}. The following statement explicitly
+restricts the exponent increments to those giving positive integer scales.
+
+\begin{theorem}\label{thm:residues}
+Suppose $\lambda=\Lrate(g)=A/B$ is reduced, with $B>0$. Then
+$\lambda\ge0$ and $B$ is squarefree. For each prime $p\mid B$ let
+$r_p\in\{1,\ldots,p-1\}$ be the representative satisfying
+\begin{equation}\label{eq:residue}
+ r_p\equiv A(B/p)^{-1}\pmod p.
+\end{equation}
+Put
+\begin{equation}\label{eq:core}
+ t_0=\prod_{p\mid B}p^{r_p},\qquad
+ \alpha_0=\sum_{p\mid B}\frac{r_p}{p},\qquad
+ k=\lambda-\alpha_0.
+\end{equation}
+For $B=1$ use $t_0=1$ and $\alpha_0=0$. Then $k$ is a nonnegative
+integer, and all and only the positive integer solutions of
+$\Lrate(t)=\lambda$ are
+\begin{equation}\label{eq:allscales}
+ t=t_0\prod_{j=1}^{k}p_j^{p_j},
+\end{equation}
+where the primes $p_j$ are arbitrary, may repeat, and may divide $B$.
+\end{theorem}
+\begin{proof}
+Writing $g=\prod p^{e_p}$ gives $\Lrate(g)=\sum e_p/p\ge0$.
+This sum has a denominator dividing the squarefree product of its
+distinct primes, so its reduced denominator is squarefree.
+For any proposed $t=\prod p^{f_p}$, let $M$ be the squarefree product
+of the primes dividing $tB$. The rate equation is equivalent to
+\begin{equation}\label{eq:modular}
+ \sum_{p\mid t}f_p M/p=A M/B.
+\end{equation}
+If $p\mid B$ were absent from $t$, the left side would be zero modulo
+$p$, whereas the right side would be nonzero, since $\gcd(A,B)=1$.
+Thus every prime of $B$ divides $t$. Reduction modulo such a $p$ and
+cancellation of $M/B$ yield
+$f_p(B/p)\equiv A\pmod p$. Here $M/B$ is a unit modulo $p$
+because $M$ and $B$ are squarefree and $p\mid B$.
+For a prime $p\mid t$ outside $B$, the
+right side is zero modulo $p$ and reduction instead gives $f_p\equiv0
+\pmod p$.
+
+Consequently the exponents have the form
+$f_p=r_p+ph_p$ for $p\mid B$, and $f_p=ph_p$ otherwise, with
+$h_p\ge0$. (Absent outside primes have $h_p=0$.) Substitution in the
+rate sum gives $\lambda=\alpha_0+\sum_p h_p$.
+Applying this to the existing $g$ proves that $k=\sum_p h_p$ is a
+nonnegative integer. Listing each prime $p$ exactly $h_p$ times gives
+\eqref{eq:allscales}. Conversely every product in that formula has
+rate $\alpha_0+k=\lambda$. This proves both directions, including
+the empty product when $k=0$.
+\end{proof}
+
+\begin{corollary}\label{cor:singleton}
+An observed homothetic class is a singleton when $k=0$, with sole scale
+$t_0$, and infinite when $k\ge1$.
+\end{corollary}
+\begin{proof}
+For $k=0$,~\eqref{eq:allscales} has one value. For $k\ge1$, fix
+$k-1$ parameters at 2 and vary the last through primes. The function
+$p\mapsto p^p$ is strictly increasing on primes, so this produces
+infinitely many distinct scales and first coordinates.
+\end{proof}
+The denominator condition alone is not an existence assertion for an
+arbitrary rational rate. Here existence is supplied by the original
+witness; in general the residual $k$ must also be nonnegative.
+Theorem~\ref{thm:residues} classifies scales of an admissible form, not
+all admissible primitive forms of A230543. For integer rates it recovers
+the historical result quoted in Section~\ref{sec:tools}.
+
+\section{The four infinite forms and their specializations}\label{sec:families}
+The four infinite forms observed are
+\begin{align*}
+ Q_4&=(2,9,42,43),\\
+ Q_3&=(99,372,1624,1669),\\
+ Q_2&=(5202,18003,46294,49943),\\
+ Q_H&=(4802517313,5246382600,19023654540,20309803913).
+\end{align*}
+Their complete first-coordinate families and scale data are shown in
+Table~\ref{tab:families}. Prime parameters in all formulas may coincide.
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{clrrrr}
+\toprule
+Class & First coordinate $n$ & $\lambda$ & $t_0$ & $k$ & Count\\
+\midrule
+$F_4$ & $2p^pq^qr^rs^s$ & $4$ & $1$ & $4$ & $17$\\
+$F_3$ & $99p^pq^qr^r$ & $3$ & $1$ & $3$ & $12$\\
+$F_2$ & $25557426p^pq^q$ & $37/17$ & $4913$ & $2$ & $3$\\
+$H$ & $4802517313p^p$ & $1$ & $1$ & $1$ & $2$\\
+\bottomrule
+\end{tabular}
+\caption{The four infinite forms. Counts refer only to the 40-term prefix;
+the scale for $F_2$ is $17^3p^pq^q$.}\label{tab:families}
+\end{table}
+
+\begin{proposition}\label{prop:families}
+Each family in Table~\ref{tab:families} produces witnesses for every
+choice of its prime parameters, and is the complete homothetic class of
+the corresponding ordered form.
+\end{proposition}
+\begin{proof}
+The exact derivative and square calculations are
+\begin{align*}
+ \D(2)&=1,& \D(9)&=6,& 2^2+9^2+42^2&=43^2,\\
+ \D(99)&=75,& \D(372)&=508,& 99^2+372^2+1624^2&=1669^2,\\
+ \D(5202)&=6681,& \D(18003)&=7111,&
+ 5202^2+18003^2+46294^2&=49943^2.
+\end{align*}
+Thus $1+4\cdot2=9$, $6+4\cdot9=42$;
+$75+3\cdot99=372$, $508+3\cdot372=1624$; and
+\[
+ 6681+(37/17)5202=18003,\qquad
+ 7111+(37/17)18003=46294.
+\]
+For $Q_H$ the remaining exact checks are
+\begin{align*}
+ \D(4802517313)&=443865287,\\
+ \D(5246382600)&=13777271940,\\
+ 4802517313^2+5246382600^2+19023654540^2
+   &=20309803913^2.
+\end{align*}
+For $Q_H$, the rate is $1$, so $\D(m)+m=u$ and $\D(u)+u=v$.
+Each displayed quadruple has gcd one. The rates for $Q_4,Q_3,Q_H$
+are integers, so their cores are 1 and their free counts are 4, 3 and 1.
+For $37/17$, $r_{17}=3$, $t_0=17^3$, $\alpha_0=3/17$, and
+$k=2$. Theorems~\ref{thm:shape} and~\ref{thm:residues} prove
+necessity and sufficiency of all four parameter formulas. Infinitude
+follows from Corollary~\ref{cor:singleton}.
+\end{proof}
+
+The integer-rate seed chains underlying narrower constructions are
+\begin{center}\small
+\begin{tabular}{rrrrr}
+\toprule
+$\lambda$ & $m$ & $T_\lambda(m)$ & $T_\lambda^2(m)$ & Root\\
+\midrule
+4 & 2 & 9 & 42 & 43\\
+3 & 99 & 372 & 1624 & 1669\\
+2 & 25557426 & 88448739 & 227442422 & 245369959\\
+1 & 102229704 & 353794956 & 909769688 & 981479836\\
+\bottomrule
+\end{tabular}
+\end{center}
+For the last two rows, the first and second derivatives of the seed
+chain entries are, respectively,
+\[
+ \D(25557426)=37333887,\quad \D(88448739)=50544944,
+\]
+\[
+ \D(102229704)=251565252,\quad \D(353794956)=555974732.
+\]
+They verify the displayed transitions directly, and each row satisfies
+the three-leg square identity. Formula~\eqref{eq:iterate} therefore
+also supplies direct membership proofs for these seed constructions.
+
+\begin{proposition}\label{prop:extraction}
+If $g=\prod p^{e_p}$, the greatest divisor of $g$ having an integer
+logarithmic derivative is
+\begin{equation}\label{eq:extract}
+ E=\prod_p p^{p\lfloor e_p/p\rfloor},\qquad
+ \Lrate(E)=\sum_p\lfloor e_p/p\rfloor.
+\end{equation}
+\end{proposition}
+\begin{proof}
+For a divisor $d=\prod p^{f_p}$ with integer $\sum f_p/p$, multiply
+by the squarefree product of its primes and reduce modulo each $p$.
+This forces $p\mid f_p$. Conversely these divisibilities make the sum
+an integer. The largest admissible exponent not exceeding $e_p$ is
+$p\lfloor e_p/p\rfloor$ independently for each prime. Their product
+is an admissible divisor divisible by every other admissible divisor.
+\end{proof}
+
+For $a(22)$, the full gcd is $78608=2^4 17^3$, with rate $37/17$.
+The maximal extraction is $E=16$, with rate 2. Dividing its witness by
+16 yields the rate-2 seed row above, because
+$\Lrate(78608/16)=3/17$ and
+$(78608/16)Q_2=17^3Q_2$. Dividing by 4 instead yields the rate-1
+seed $4\cdot17^3 Q_2$. These two seeds are not themselves derivative
+witnesses: scaling a form of rate $\lambda$ by $s$, with
+$\Lrate(s)=h$, gives a seed of rate $\lambda-h$.
+Thus their rates are $37/17-3/17=2$ and
+$37/17-20/17=1$, respectively. This explains
+\[
+ F_1=\{102229704p^p:p\text{ prime}\}\subsetneq F_2:
+\]
+fix one of $F_2$'s parameters at 2. Strictness follows from the member
+$25557426\cdot3^6$, which is not divisible by 4, whereas every member
+of $F_1$ is divisible by 4. Both constructions have primitive form
+$Q_2$; they are not two independent forms.
+
+In general, if $\Lrate(s)=h$ and the relevant iterates are integral,
+the product rule gives
+\[
+ T_\lambda(sz)=sT_{\lambda+h}(z),\qquad
+ T_\lambda^j(sz)=sT_{\lambda+h}^j(z).
+\]
+This explains the rate correction when a seed is rescaled. Dividing a
+witness by its gcd does not preserve its derivative chain without that
+correction.
+
+Fixing three parameters of $F_4$ at 2 gives $128p^p$; fixing two
+parameters of $F_3$ at 2 gives $1584p^p$. The former is already proved
+in the local comparative manuscript on A249106~\cite{comparison}.
+Setting all parameters equal gives the diagonals $2p^{4p}$ and
+$99p^{3p}$. These are specializations, not additional forms. All four
+full families are \emph{parametric control witnesses}: they establish
+positive membership and upper bounds, not consecutiveness or global
+coverage of the sequence.
+
+\section{Six singleton forms}\label{sec:singletons}
+Label by $S_i$ the singleton form observed at index $i$. Their complete
+data are in Table~\ref{tab:singletons}; the ordered coordinates are
+essential even when the first is not the smallest leg.
+
+\begin{table}[ht]
+\centering\scriptsize
+\begin{tabular}{clrr}
+\toprule
+Form & Primitive $Q=(m,u,v,w)$ & $\lambda$ & $t_0$\\
+\midrule
+$S_2$ & $(1203,404,408,1333)$ & 0 & 1\\
+$S_8$ & $(249753,154756,176892,342953)$ & 0 & 1\\
+$S_{11}$ & $(722718,843189,281066,1145551)$ & 0 & 1\\
+$S_{28}$ & $(942667,194256,536448,1101877)$ & $2/71$ & $71^2$\\
+$S_{36}$ & $(258837,169100,283140,419237)$ & $4/19$ & $19^4$\\
+$S_{37}$ & $(43108595319,19046592592,38093185200,60598798985)$ & 0 & 1\\
+\bottomrule
+\end{tabular}
+\caption{All six singleton forms. In every row $k=0$ and the associated
+term is $a(i)=t_0m$.}\label{tab:singletons}
+\end{table}
+
+\begin{proposition}\label{prop:singletons}
+Each form in Table~\ref{tab:singletons} has exactly the indicated scale
+over all positive integers.
+\end{proposition}
+\begin{proof}
+The exact derivative and square checks are recorded below:
+\begin{center}\small
+\begin{tabular}{crrr}
+\toprule
+Form & $\D(m)$ & $\D(u)$ & $m^2+u^2+v^2=w^2$\\
+\midrule
+$S_2$ & 404 & 408 & 1776889\\
+$S_8$ & 154756 & 176892 & 117616760209\\
+$S_{11}$ & 843189 & 281066 & 1312287093601\\
+$S_{28}$ & 167702 & 530976 & 1214132923129\\
+$S_{36}$ & 114608 & 247540 & 175759662169\\
+$S_{37}$ & 19046592592 & 38093185200 & 3672214438424437030225\\
+\bottomrule
+\end{tabular}
+\end{center}
+The rate-zero rows have $\D(m)=u$, $\D(u)=v$, so $t_0=1$ and
+$k=0$. For $S_{28}$,
+$u-\D(m)=26554=2m/71$ and
+$v-\D(u)=5472=2u/71$; hence $r_{71}=2$, $\alpha_0=2/71$
+and $k=0$. For $S_{36}$ the differences are
+$54492=4m/19$ and $35600=4u/19$, giving $r_{19}=4$ and $k=0$.
+All six quadruples have gcd one. Theorem~\ref{thm:residues} and
+Corollary~\ref{cor:singleton} give uniqueness of the scale.
+\end{proof}
+
+The corresponding factorizations include
+\[
+ a(28)=11\cdot17\cdot71^4,
+ \qquad a(36)=3\cdot19^6\cdot239,
+\]
+with full gcds $5041$ and $130321$, respectively, and
+\[
+ a(37)=3\cdot23\cdot31\cdot53\cdot73\cdot5209
+\]
+with gcd one. Singleton here is a global statement for a fixed ordered
+form, not just within the scanned interval or numerical cap. It does not
+exclude a parametrization allowing the form itself to vary. It does
+disprove the claim that every term belongs to an infinite class obtained
+by scaling its own primitive form.
+
+\section{Exact enumeration and its correctness}\label{sec:algorithm}
+The executed program uses C17, OpenMP, GNU unsigned 128-bit intermediates
+and GMP integers. Its certified numerical input envelope is
+$2\le n\le N=10^{16}$; the completed campaign reaches only
+$130000000000$. The input cap is not a claim of practical complete
+searchability.
+
+\subsection{Predicate evaluation without family restrictions}
+In a block $[\ell,h]$, every integer has a residual initially equal to
+$n$ and a derivative accumulator initially zero. An ordinary prime sieve
+provides every prime up to $\lfloor\sqrt h\rfloor$. For each such prime,
+the segmented loop visits all its multiples in the block, removes its
+full exponent $e$ from the residual, and adds $e(n/p)$ to the accumulator.
+Afterwards a residual greater than one is prime: if it were composite,
+it would have a prime divisor at most $\sqrt h$, already removed.
+Adding $n$ divided by that residual completes~\eqref{eq:derivative}.
+Hence every input receives its exact first derivative.
+
+The only early arithmetic exclusion is $\D(n)=1$, the prime case
+proved impossible in Section~\ref{sec:tools}. For a composite $n$,
+either a repeated prime contributes at least 4, or two prime factors
+contribute a sum at least $2+3$; thus this exclusion cannot remove a
+composite solution. No divisibility, primitivity, shape or congruence
+filter is used. The program factors $\D(n)$ exactly to compute
+$\D^2(n)$ and then forms the sum of three squares in GMP. Its
+\texttt{mpz\_perfect\_square\_p} predicate and
+\texttt{mpz\_sqrt} extraction use exact integer arithmetic~\cite{gmp}.
+
+Factorization first tests primality using the seven strong-probable-prime
+bases
+\[
+ 2,325,9375,28178,450775,9780504,1795265022.
+\]
+This is the deterministic test below $2^{64}$ stated in
+Fori\v{s}ek and Jan\v{c}ina's Theorem 3~\cite{forisek}, which credits
+Sinclair's base set and Izykowski's verification. The operands here are
+within that range. Bases are reduced modulo the operand. A zero residue
+is skipped; every possible exception divides one of the seven fixed bases.
+All 55 distinct divisors at least 2 of those bases were checked against
+independent trial-division primality: the implementation accepts the nine
+primes and rejects the 46 composites. For all other operands no base
+vanishes, and reduction preserves the modular-power tests in the cited
+theorem. This finite exceptional-case check is separate from negative
+coverage of the sequence. Composite splitting tries small primes through 97,
+then a Pollard-rho path~\cite{pollard}, with fixed polynomials
+$x^2+c$, $1\le c\le32$, and at most 100000 iterations per polynomial.
+If that path fails, exact odd trial division from 101 through
+$\lfloor\sqrt x\rfloor$ supplies a deterministic fallback. The
+loop guard $p\le x/p$ avoids overflow. Proper factors reduce the
+recursive operands; prime leaves are checked, sorted and multiplied back
+to the original input. Reconstruction failure is an error, not evidence
+of nonmembership. Rho is only a factor-finding optimization; its
+heuristic runtime does not enter the proof of exactness.
+
+\subsection{Numeric safety and completion semantics}
+For $x\ge2$, if $\Omega(x)$ counts prime factors with multiplicity,
+then $\Omega(x)\le\lfloor\log_2x\rfloor$ and
+\begin{equation}\label{eq:bound}
+ \D(x)=x\sum e_p/p\le\tfrac{x}{2}\lfloor\log_2x\rfloor.
+\end{equation}
+The corresponding real-logarithm bound is given in
+Ufnarovski and \AA hlander's Theorem 9~\cite{ufnarovski}, attributed
+there to Barbeau; the floor version above follows directly from
+$\Omega(x)\le\lfloor\log_2x\rfloor$.
+At $N=10^{16}$ it gives the conservative bounds
+\[
+ U_1=265000000000000000,
+ \qquad U_2=7552500000000000000
+\]
+for $\D(n)$ and $\D^2(n)$, since
+$\lfloor\log_2N\rfloor=53$ and
+$\lfloor\log_2 U_1\rfloor=57$. Thus $n$, $\D(n)$ and
+$\D^2(n)$ require at most 54, 58 and 63 bits. Factorization operands
+are $n$ or $\D(n)$, so 64 prime-factor slots suffice. Modular
+multiplication uses a 128-bit intermediate; even the full 64-bit
+operand product fits, and the actual envelope is smaller.
+The square sum is bounded by $N^2+U_1^2+U_2^2$, a 126-bit integer,
+and its floor square root is at most $7557154308997534291<2^{63}$.
+GMP nevertheless performs the square computation before conversion;
+checked conversions enforce the stated bounds. The sieve requires primes
+only through $10^8$ at the full input cap.
+
+OpenMP distributes predicate evaluations with dynamic chunks of 64 and
+at most eight threads. Each input owns its flag, taking one of three
+states: negative, positive or incomplete. The loop barrier precedes
+serial completeness inspection and ordered positive replay. A failed
+factorization, out-of-range intermediate or stop request makes the block
+incomplete. In particular, a zero second derivative outside the already
+excluded prime case is not silently recorded as negative: it causes an
+incomplete result. For a composite $n$, $\D(n)\ge4$, so an exact second
+derivative is indeed positive.
+
+The durable frontier advances only after a complete block and successful
+positive replay. A segment is sealed only when its frontier equals its
+upper endpoint. Unsealed partial state is not full-interval evidence;
+interrupted blocks are repeated, not treated as intra-input checkpoints.
+State writes use flush, file synchronization, atomic rename and directory
+synchronization; cooperating commands use a run lock. These mechanisms
+preserve completed interval records. Their integrity checks cannot by
+themselves establish correctness of each negative predicate evaluation.
+
+\begin{proposition}\label{prop:scan}
+In uninterrupted successful execution within the checked numerical
+domain, the algorithm considers every integer in its configured interval
+and records exactly the witnesses satisfying~\eqref{eq:predicate}.
+An interval is admitted as complete only through sealed consecutive
+segments reaching its configured endpoint.
+\end{proposition}
+\begin{proof}
+Consecutive blocks partition the interval; the segmented sieve visits all
+inputs and computes their first derivatives as proved above. The only
+early exclusion is impossible for a witness. Deterministic primality,
+exact splitting with fallback and product reconstruction yield the second
+derivative, and GMP decides the square condition exactly. Any failed
+obligation instead prevents block completion and sealing. Serial replay
+records positives in increasing order. Consecutive segment bounds and a
+sealed endpoint therefore establish coverage, conditional on correct
+execution of these implemented operations.
+\end{proof}
+This is an algorithmic correctness argument supported by finite tests;
+it is not a machine-checked proof of the compiled implementation or a
+second negative enumeration.
+
+\section{The 40-term prefix and its validation}\label{sec:extension}
+\begin{theorem}[Computational extension, with stated dependencies]
+\label{thm:extension}
+Assuming the accepted 22-term baseline and correctness of the completed C
+enumeration, the prefix in Table~\ref{tab:prefix} is the exact indexed
+prefix through $130000000000$. It has 40 terms, with
+$a(40)=129667967451$. Its forms comprise 34 members of four infinite
+classes and six singleton classes. Positive membership has been checked
+independently; full negative coverage has not been independently
+enumerated a second time.
+\end{theorem}
+\begin{proof}[Evidence and structural proof]
+The six inclusive run intervals in Table~\ref{tab:coverage} are contiguous
+from $408918817$ through $130000000000$. The input count is
+$129591081184$, comprising 18 positives and $129591081166$ negatives
+across 22 sealed segments.
+The sealed parser verifies bounds, configurations, frontier completion,
+ordered aggregate equality and joins. Under the stated execution
+assumption, Proposition~\ref{prop:scan} excludes omitted terms in that
+interval. Appending the sorted positives to the accepted baseline proves
+the indicated indices. There is no new local negative enumeration below
+the baseline endpoint.
+
+For every row, independent trial division recomputes both derivatives
+and an integer square root checks~\eqref{eq:predicate}. Normalization,
+rate reconstruction and prime-parameter reconstruction give
+Table~\ref{tab:prefix}. The four infinite forms are covered by
+Proposition~\ref{prop:families}, and the six remaining forms by
+Proposition~\ref{prop:singletons}. Their respective counts sum to
+$17+12+3+2=34$ and six. The complete witnesses appear in
+Table~\ref{tab:witnesses}.
+\end{proof}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{rr rr}
+\toprule
+Lower endpoint & Upper endpoint & Segments & Positives\\
+\midrule
+408918817 & 711541152 & 1 & 1\\
+711541153 & 10000000000 & 3 & 7\\
+10000000001 & 25728640000 & 2 & 3\\
+25728640001 & 47119590400 & 3 & 4\\
+47119590401 & 100000000000 & 8 & 2\\
+100000000001 & 130000000000 & 5 & 1\\
+\bottomrule
+\end{tabular}
+\caption{Completed inclusive coverage after the accepted baseline.}
+\label{tab:coverage}
+\end{table}
+
+Table~\ref{tab:coverage} is the primary coverage record; the following
+bounded cross-checks do not replace its full negative enumeration.
+The independent campaign windows have a union of 10763 distinct inputs,
+with 11 positives and 10752 negatives. The final window is
+$129667966939$--$129667967963$, containing 1025 inputs, one positive and
+1024 negatives. Earlier window executions are inherited and reconciled
+with their original reports, not represented as fresh executions. All
+40 positives were rechecked during manuscript preparation. The separate
+code-diagnostic union covers 33827 distinct inputs with 30 positives and
+33797 negatives; it is not added to the campaign-window count.
+
+These checks have different meanings. The independent Python oracle uses
+trial division and integer roots, unlike the C sieve, primality and rho
+route. Native replay checks state and recomputes positives, not all
+negatives. Archive integrity checks bind recorded files but are not
+mathematical certificates. The final auditor was run with ordinary
+Python, with \texttt{python3 -O}, and against the live retained state.
+Those reports agree, but they share the same audit implementation. Retained
+finite code tests include forced fallback and incomplete-block behavior,
+state corruption/recovery and parallel configurations; they support the
+implementation argument without certifying every input independently.
+
+Initial family controls were known before the runs that assigned their
+indices. In contrast, the form $Q_H$ first appeared in the run reaching
+$a(33)=19210069252$, with parameter 2. Its parameter-3 witness was then
+known before the final run indexed it at 40. Thus the last witness
+\[
+ (129667967451,141652330200,513638672580,548364705651)
+\]
+confirms a previously observed form rather than introducing an eleventh.
+
+\subsection{Recorded resource use}
+The recorded environment is an AMD Ryzen 9 7940HS system running Linux
+Mint 22.3 (kernel 6.17.0-42) on x86\_64 with glibc 2.39. GCC 13.3.0 compiled the program
+with \texttt{-O3}, \texttt{-std=c17}, \texttt{-fopenmp}, strict warning
+flags and \texttt{-Werror}; it links GMP 6.3.0, OpenSSL 3.0.13 and
+GNU OpenMP. All campaign configurations use eight threads.
+The sum of recorded continuation-call wall times is about 62022 seconds,
+or 17 hours 14 minutes. The final $100$--$130$ billion continuation uses
+about 15946 seconds, or 4 hours 26 minutes, in five calls of approximately
+52--54 minutes each; its maximum recorded resident set is 23536 KiB.
+These times exclude development, reviews and audits and are not calendar
+elapsed time. No full-cap timing or unmeasured parallel speedup is inferred.
+
+The retained code, witnesses, raw interval records and independent
+validators are the basis of the local result. The designated repository
+and archive locators in~\cite{project} refer to a planned publication;
+a public release and remote reproduction have not been verified.
+
+\section{Finite auxiliary studies and related predicates}\label{sec:finite}
+\subsection{A bounded seed rectangle}
+For $1\le\lambda\le8$ and $1\le m\le20000$, the seed test checks
+positivity of the iterates and whether
+$m^2+T_\lambda(m)^2+T_\lambda^2(m)^2$ is an integer square.
+The retained study covers exactly 160000 pairs, with the following
+15 positives:
+\begin{center}\small
+\begin{tabular}{cl}
+\toprule
+$\lambda$ & Positive $m$\\
+\midrule
+1 & 128, 864, 1584, 5832, 10692\\
+2 & 32, 216, 396, 1458, 2673\\
+3 & 8, 54, 99, 6250\\
+4 & 2\\
+5--8 & none in this rectangle\\
+\bottomrule
+\end{tabular}
+\end{center}
+These seeds normalize to just $Q_4$ and $Q_3$. Trial division checked
+the rectangle, and SymPy independently rechecked its positives; the
+159985 negatives were not enumerated by a second independent
+implementation. Neither completeness outside the rectangle nor
+completeness among rational-rate primitive forms follows.
+
+\subsection{The prime pattern behind index 28}
+Since $187=11\cdot17$ and $\D(187)=28$, the product rule, including
+shared-prime cases $p=11,17$, gives for every prime $p$
+\begin{equation}\label{eq:pattern}
+ C_p=28p+748,\quad \D(187p^4)=p^3C_p,\quad
+ \D^2(187p^4)=p^2\bigl(p\D(C_p)+3C_p\bigr).
+\end{equation}
+The second equality follows by differentiating $p^3C_p$, without any
+coprimality condition. The retained records cover all 168 primes
+$p\le1000$ and have exactly one positive, $p=71$, giving $a(28)$.
+Their read-only replay validates the stated finite screen. No assertion
+of uniqueness over all primes follows from it.
+
+\subsection{Actual mathematical correlations}
+A003415 supplies $\D(n)$ and A068346 supplies
+$\D(\D(n))$~\cite{derivatives}. A051674 supplies exactly the
+rate-one scale factors, so products of its values, together with a
+fixed rational-rate core, implement~\eqref{eq:allscales}. This is a
+structural relation, not equality of sequence indices.
+
+A210503 requires $n,\D(n)$ to be legs of a primitive Pythagorean
+triple. A211176 instead requires $n$ to be the hypotenuse of a
+Pythagorean triple with $\D(n)$ a leg, without a primitivity
+requirement~\cite{triples}. Deleting $\D^2(n)$ from
+\eqref{eq:predicate} proves neither condition. The primitive-quadruple
+catalogues A096907--A096909 and A097263--A097265 project sorted legs
+or parity-selected legs, ordered by diagonal and then by the other
+coordinates~\cite{catalogues}. Our $Q$ must retain derivative order;
+sorting it forgets which coordinate is the original integer. A097266
+counts primitive quadruples by odd diagonal, and A360946 counts
+quadruples by inradius~\cite{counts}. Such catalogues can identify a
+geometric form, but do not furnish a correspondence with the increasing
+$n$ indices here or settle an unsearched interval.
+
+\section{The first unresolved index and open questions}\label{sec:endpoint}
+By $F_4$ with parameters $2,5,5,5$, there is an exact witness
+\begin{align*}
+ n&=244140625000=2\cdot2^2\cdot5^{15},\\
+ \D(n)&=1098632812500,\\
+ \D^2(n)&=5126953125000,\\
+ R&=5249023437500.
+\end{align*}
+Together with completed coverage this gives, under the indexing
+dependencies of Theorem~\ref{thm:extension},
+\begin{equation}\label{eq:endpoint}
+ 130000000000<a(41)\le244140625000.
+\end{equation}
+The upper witness is not an established value of $a(41)$ and is not in
+the indexed 40-term table. Negative coverage of
+$130000000001$--$244140624999$, or another exact ordering proof,
+is still required to identify that index.
+
+A finite parameter comparison finds this to be the smallest member above
+the completed endpoint among the four observed infinite classes. To make
+that comparison exhaustive within those classes up to the bound, it
+suffices to use primes $2,3,5,7$: already $11^{11}$ exceeds the bound
+even before multiplication by a seed or other parameters. This does not
+exclude a different primitive form or an intermediate singleton.
+
+The sequence is infinite by $F_4$, but infinitude of the set of
+\emph{distinct primitive forms} remains open in this study. Are there
+infinitely many admissible singleton forms? How can admissible primitive
+forms be characterized before their first witness is found? The ten
+observed forms and two bounded screens do not justify conjectural
+answers to these questions. A universal cover by variable-form families
+would first require a precise definition of the permitted
+parametrizations. Saying that every term belongs to some homothetic
+class is merely the definition, while saying that every such class is
+infinite is already false.
+
+\section{Conclusions}
+The local computation adds 18 indexed terms to the dated accepted baseline,
+yielding 40 terms through $130000000000$, with the negative-enumeration dependency
+and independent validation scopes stated explicitly. The fixed-form
+criterion separates complete scale classification from the unresolved
+classification of all primitive forms. It proves four infinite classes,
+accounts for their specializations, and proves six singleton classes
+over the full positive-integer scale domain. The next index has an exact
+upper witness, but remains unresolved. Finite seed and pattern studies
+give additional evidence without extending their bounds into global
+claims.
+
+\appendix
+\section{Complete indexed and witness tables}\label{sec:tables}
+In Table~\ref{tab:prefix}, $g$ is the full quadruple gcd and the prime
+tuple gives the free parameters of the corresponding complete family.
+For $S_i$ the tuple is empty and the sole scale is the indicated $g$.
+The $F_2$ scale includes its fixed core $17^3$. The horizontal break
+after 22 distinguishes the accepted baseline from the local extension.
+The witness table supplies every derivative and root; both tables are
+part of this monolithic manuscript.
+
+\begingroup\small
+\begin{longtable}{rrcrl}
+\caption{All 40 indexed terms, forms, full gcds and free prime parameters.}\label{tab:prefix}\\
+\toprule
+$i$ & $a(i)$ & Class & $g$ & Parameters\\
+\midrule
+\endfirsthead
+\multicolumn{5}{c}{Table \thetable\ (continued)}\\
+\toprule
+$i$ & $a(i)$ & Class & $g$ & Parameters\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1 & 512 & $F_4$ & 256 & $(2,2,2,2)$\\
+2 & 1203 & $S_{2}$ & 1 & $\varnothing$\\
+3 & 3456 & $F_4$ & 1728 & $(2,2,2,3)$\\
+4 & 6336 & $F_3$ & 64 & $(2,2,2)$\\
+5 & 23328 & $F_4$ & 11664 & $(2,2,3,3)$\\
+6 & 42768 & $F_3$ & 432 & $(2,2,3)$\\
+7 & 157464 & $F_4$ & 78732 & $(2,3,3,3)$\\
+8 & 249753 & $S_{8}$ & 1 & $\varnothing$\\
+9 & 288684 & $F_3$ & 2916 & $(2,3,3)$\\
+10 & 400000 & $F_4$ & 200000 & $(2,2,2,5)$\\
+11 & 722718 & $S_{11}$ & 1 & $\varnothing$\\
+12 & 1062882 & $F_4$ & 531441 & $(3,3,3,3)$\\
+13 & 1948617 & $F_3$ & 19683 & $(3,3,3)$\\
+14 & 2700000 & $F_4$ & 1350000 & $(2,2,3,5)$\\
+15 & 4950000 & $F_3$ & 50000 & $(2,2,5)$\\
+16 & 18225000 & $F_4$ & 9112500 & $(2,3,3,5)$\\
+17 & 33412500 & $F_3$ & 337500 & $(2,3,5)$\\
+18 & 105413504 & $F_4$ & 52706752 & $(2,2,2,7)$\\
+19 & 123018750 & $F_4$ & 61509375 & $(3,3,3,5)$\\
+20 & 225534375 & $F_3$ & 2278125 & $(3,3,5)$\\
+21 & 312500000 & $F_4$ & 156250000 & $(2,2,5,5)$\\
+22 & 408918816 & $F_2$ & 78608 & $(2,2)$\\
+\midrule
+23 & 711541152 & $F_4$ & 355770576 & $(2,2,3,7)$\\
+24 & 1304492112 & $F_3$ & 13176688 & $(2,2,7)$\\
+25 & 2109375000 & $F_4$ & 1054687500 & $(2,3,5,5)$\\
+26 & 2760202008 & $F_2$ & 530604 & $(2,3)$\\
+27 & 3867187500 & $F_3$ & 39062500 & $(2,5,5)$\\
+28 & 4751984347 & $S_{28}$ & 5041 & $\varnothing$\\
+29 & 4802902776 & $F_4$ & 2401451388 & $(2,3,3,7)$\\
+30 & 8805321756 & $F_3$ & 88942644 & $(2,3,7)$\\
+31 & 14238281250 & $F_4$ & 7119140625 & $(3,3,5,5)$\\
+32 & 18631363554 & $F_2$ & 3581577 & $(3,3)$\\
+33 & 19210069252 & $H$ & 4 & $(2)$\\
+34 & 26103515625 & $F_3$ & 263671875 & $(3,5,5)$\\
+35 & 32419593738 & $F_4$ & 16209796869 & $(3,3,3,7)$\\
+36 & 33731896677 & $S_{36}$ & 130321 & $\varnothing$\\
+37 & 43108595319 & $S_{37}$ & 1 & $\varnothing$\\
+38 & 59435921853 & $F_3$ & 600362847 & $(3,3,7)$\\
+39 & 82354300000 & $F_4$ & 41177150000 & $(2,2,5,7)$\\
+40 & 129667967451 & $H$ & 27 & $(3)$\\
+\end{longtable}
+\endgroup
+
+\begingroup\small
+\begin{longtable}{rrrrr}
+\caption{Complete positive witnesses for the indexed prefix.}\label{tab:witnesses}\\
+\toprule
+$i$ & $n$ & $\D(n)$ & $\D^2(n)$ & $R$\\
+\midrule
+\endfirsthead
+\multicolumn{5}{c}{Table \thetable\ (continued)}\\
+\toprule
+$i$ & $n$ & $\D(n)$ & $\D^2(n)$ & $R$\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1 & 512 & 2304 & 10752 & 11008\\
+2 & 1203 & 404 & 408 & 1333\\
+3 & 3456 & 15552 & 72576 & 74304\\
+4 & 6336 & 23808 & 103936 & 106816\\
+5 & 23328 & 104976 & 489888 & 501552\\
+6 & 42768 & 160704 & 701568 & 721008\\
+7 & 157464 & 708588 & 3306744 & 3385476\\
+8 & 249753 & 154756 & 176892 & 342953\\
+9 & 288684 & 1084752 & 4735584 & 4866804\\
+10 & 400000 & 1800000 & 8400000 & 8600000\\
+11 & 722718 & 843189 & 281066 & 1145551\\
+12 & 1062882 & 4782969 & 22320522 & 22851963\\
+13 & 1948617 & 7322076 & 31965192 & 32850927\\
+14 & 2700000 & 12150000 & 56700000 & 58050000\\
+15 & 4950000 & 18600000 & 81200000 & 83450000\\
+16 & 18225000 & 82012500 & 382725000 & 391837500\\
+17 & 33412500 & 125550000 & 548100000 & 563287500\\
+18 & 105413504 & 474360768 & 2213683584 & 2266390336\\
+19 & 123018750 & 553584375 & 2583393750 & 2644903125\\
+20 & 225534375 & 847462500 & 3699675000 & 3802190625\\
+21 & 312500000 & 1406250000 & 6562500000 & 6718750000\\
+22 & 408918816 & 1415179824 & 3639078752 & 3925919344\\
+\midrule
+23 & 711541152 & 3201935184 & 14942364192 & 15298134768\\
+24 & 1304492112 & 4901727936 & 21398941312 & 21991892272\\
+25 & 2109375000 & 9492187500 & 44296875000 & 45351562500\\
+26 & 2760202008 & 9552463812 & 24563781576 & 26499955572\\
+27 & 3867187500 & 14531250000 & 63437500000 & 65195312500\\
+28 & 4751984347 & 979244496 & 2704234368 & 5554561957\\
+29 & 4802902776 & 21613062492 & 100860958296 & 103262409684\\
+30 & 8805321756 & 33086663568 & 144442853856 & 148445272836\\
+31 & 14238281250 & 64072265625 & 299003906250 & 306123046875\\
+32 & 18631363554 & 64479130731 & 165805525638 & 178874700111\\
+33 & 19210069252 & 20985530400 & 76094618160 & 81239215652\\
+34 & 26103515625 & 98085937500 & 428203125000 & 440068359375\\
+35 & 32419593738 & 145888171821 & 680811468498 & 697021265367\\
+36 & 33731896677 & 22037281100 & 36899087940 & 54635385077\\
+37 & 43108595319 & 19046592592 & 38093185200 & 60598798985\\
+38 & 59435921853 & 223334979084 & 974989263528 & 1002005591643\\
+39 & 82354300000 & 370594350000 & 1729440300000 & 1770617450000\\
+40 & 129667967451 & 141652330200 & 513638672580 & 548364705651\\
+\end{longtable}
+\endgroup
+
+\section*{Data availability}
+The indexed prefix, documentary witness table, executed source and build
+instructions, raw sealed coverage records, timing records, finite-study
+data and independent validation scripts are retained locally. A public
+repository and archival deposit, designated in the References, are planned
+but have not been verified as available. The designated archival identifier
+will be replaced after first publication when the author supplies the
+verified official locator. Reproduction of the coverage audit requires the raw records
+and validator dependencies, in addition to the positive witness data;
+the manuscript alone does not replace those artifacts.
+
+\section*{AI use disclosure}
+OpenAI Codex and ChatGPT, Anthropic Claude, Google Gemini, xAI Grok,
+Alibaba Qwen and Meta AI contributed in the roles described below.
+The retained code reports identify ChatGPT as GPT-5.6 Sol, Claude as
+Opus 5.5, Gemini as 3.0 Pro, Grok as 4.7, Qwen as 3.8 and Meta AI as
+Muse Spark 1.1. These are reported provenance, not independently
+authenticated identities. Other contributions lack sufficient provider or
+model metadata for a reliable family attribution. Same-provider
+contributions are not assumed independent.
+
+\noindent\textbf{Mathematical analysis.}
+OpenAI Codex assisted with source reading, exact-arithmetic checks,
+family analysis and formulation of the proofs. Historical sources and
+local evidence were checked separately from generated explanations.
+
+\noindent\textbf{Algorithm and code.}
+OpenAI Codex assisted with algorithm design and implementation. The
+retained code-review process includes contributions from all the families
+named above. Frozen review and local validation records document their
+scope separately from the executed campaign.
+Reviewer execution claims were not substituted for local validation.
+
+\noindent\textbf{Manuscript.}
+OpenAI Codex, based on GPT-6, assisted with drafting and internal
+six-pass checking and revision of this manuscript. Nine first-round
+manuscript reports were subsequently supplied by the author. Reported
+review systems include the six providers named above and Z.ai GLM;
+two reports do not establish a model/provider family. One report
+explicitly lacked attachment access. The reports were adjudicated against
+the sources and retained evidence; their execution claims were not
+substituted for local validation. The historical code review remains
+separate from manuscript review. Numerical claims depend on the retained computational
+artifacts and local arithmetic checks, not on conversational assertions.
+Carlo Corti assumes full scientific responsibility for the mathematical
+statements, algorithm, implementation, numerical results, validation boundaries
+and conclusions.
+
+\begingroup
+\raggedright
+\clearpage
+\begin{thebibliography}{99}
+\bibitem{sequence}
+P. P. Lava, OEIS A230543 (2013); description: numbers $n$ such that
+$n$, $n'$ and $n''$ are the legs of a Pythagorean quadruple, with terms from G. Resta
+(2013) and R. Chandler (2016--2017).
+\url{https://oeis.org/A230543}.
+Baseline acquired October 6, 2026; current endpoint not reverified.
+
+\bibitem{ufnarovski}
+V. Ufnarovski and B. \AA hlander, How to differentiate a number,
+\emph{Journal of Integer Sequences} \textbf{6} (2003), Article 03.3.4.
+\url{https://cs.uwaterloo.ca/journals/JIS/VOL6/Ufnarovski/ufnarovski.html}.
+
+\bibitem{kovic}
+J. Kovi\v{c}, The arithmetic derivative and antiderivative,
+\emph{Journal of Integer Sequences} \textbf{15} (2012), Article 12.3.8.
+\url{https://cs.uwaterloo.ca/journals/JIS/VOL15/Kovic/kovic4.pdf}.
+
+\bibitem{book}
+G. Balzarotti and P. P. Lava, \emph{La derivata aritmetica}, Hoepli,
+2013. ISBN 9788820358648.
+\url{https://www.hoepli.it/libro/la-derivata-aritmetica-/9788820358648.html}.
+Publisher metadata consulted; full text not consulted.
+
+\bibitem{sandit}
+G. Balzarotti and P. P. Lava, \emph{La derivata aritmetica}, Sandit Libri.
+ISBN 9788869287480. Publisher metadata consulted; publication year
+not independently verified and full text not consulted.
+
+\bibitem{overview}
+T. Tossavainen, P. Haukkanen, J. K. Merikoski and M. Mattila,
+We can differentiate numbers, too,
+\emph{The College Mathematics Journal} \textbf{55}, no. 2 (2024), 100--108.
+DOI: 10.1080/07468342.2023.2268494.
+\url{https://www.researchgate.net/publication/375299116_We_Can_Differentiate_Numbers_Too}.
+Full author-uploaded text consulted October 9, 2026.
+
+\bibitem{derivatives}
+N. J. A. Sloane and R. K. Guy, OEIS A003415, arithmetic derivative;
+R. Zumkeller, OEIS A068346, second arithmetic derivative;
+A. Auel, OEIS A051674, $p^p$ for prime $p$, with T. D. Noe's
+fixed-point interpretation (2004).
+\url{https://oeis.org/A003415}; \url{https://oeis.org/A068346};
+\url{https://oeis.org/A051674}. Definitions consulted October 9, 2026.
+
+\bibitem{comparison}
+C. Corti, \emph{An Exact Extension and an Infinite Family for OEIS A249106},
+local manuscript, version 4 (2026), section on A230543.
+Public availability not verified.
+
+\bibitem{forisek}
+M. Fori\v{s}ek and J. Jan\v{c}ina, Fast primality testing for integers that
+fit into a machine word, in \emph{Student Research Forum Papers and
+Posters at SOFSEM 2015}, CEUR Workshop Proceedings \textbf{1326}
+(2015), 20--30.
+\url{https://ceur-ws.org/Vol-1326/020-Forisek.pdf}.
+
+\bibitem{pollard}
+J. M. Pollard, A Monte Carlo method for factorization,
+\emph{BIT} \textbf{15} (1975), 331--334.
+DOI: 10.1007/BF01933667.
+\url{https://pages.cs.wisc.edu/~cs812-1/pollardrho.pdf}.
+
+\bibitem{gmp}
+GNU MP project, GNU MP 6.3.0 manual, Section 5.8, Root extraction functions.
+\url{https://gmplib.org/manual/Integer-Roots}. Consulted October 9, 2026.
+
+\bibitem{triples}
+P. P. Lava, OEIS A210503, arithmetic-derivative primitive Pythagorean
+triples, and OEIS A211176, arithmetic-derivative hypotenuse condition
+(2013). \url{https://oeis.org/A210503}; \url{https://oeis.org/A211176}.
+Definitions consulted October 9, 2026.
+
+\bibitem{catalogues}
+R. Chandler, OEIS primitive Pythagorean quadruple projections
+A096907--A096909 and A097263--A097265 (2004).
+\url{https://oeis.org/A096907}; \url{https://oeis.org/A096908};
+\url{https://oeis.org/A096909}; \url{https://oeis.org/A097263};
+\url{https://oeis.org/A097264}; \url{https://oeis.org/A097265}.
+Definitions consulted October 9, 2026.
+
+\bibitem{counts}
+R. Chandler, OEIS A097266, Number of primitive Pythagorean quadruples
+with diagonal $2n+1$;
+M.-\'{A}. P\'{e}rez Garc\'{i}a-Ortega, OEIS A360946,
+Number of Pythagorean quadruples with inradius $n$ (2023).
+\url{https://oeis.org/A097266}; \url{https://oeis.org/A360946}.
+Definitions consulted October 9, 2026.
+
+\bibitem{project}
+C. Corti, \emph{An Exact Local Extension and Homothetic Classes for
+OEIS A230543}, GitHub repository and Zenodo archive, 2026.
+\url{https://github.com/carcorti/A230543};
+\url{https://doi.org/10.5281/zenodo.xxxxxxxx}.
+Designated draft locators for the planned publication; the DOI is a
+placeholder and a public release has not been verified.
+\end{thebibliography}
+\endgroup
+\end{document}
+

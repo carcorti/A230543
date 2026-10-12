@@ -1,0 +1,13 @@
+/src/a230543
+/validation/local_v1/
+/validation/review01/
+/paper_review/
+/src_review/
+/oeis/
+__pycache__/
+*.pyc
+*.aux
+*.log
+*.out
+*.toc
+*.pdf

@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software or its data, please cite the accompanying article. Metadata is a local draft; the DOI is a placeholder."
+type: software
+title: "OEIS A230543: exact extension and homothetic classes"
+version: "v1.0"
+authors:
+  - family-names: "Corti"
+    given-names: "Carlo"
+    email: "carlo.corti@outlook.com"
+repository-code: "https://github.com/carcorti/A230543"
+license: MIT
+doi: "10.5281/zenodo.xxxxxxxx"
+url: "https://doi.org/10.5281/zenodo.xxxxxxxx"
+keywords:
+  - OEIS A230543
+  - arithmetic derivative
+  - Pythagorean quadruples
+  - exact computation
+  - homothetic classes
+abstract: "Exact C enumeration and independently checked positive witnesses for a 40-term local prefix of A230543, with completed recorded coverage through 130000000000 and ten observed primitive forms. Full negative coverage remains conditional on the reviewed implementation and accepted baseline."
+preferred-citation:
+  type: article
+  title: "An Exact Local Extension and Homothetic Classes for OEIS A230543"
+  authors:
+    - family-names: "Corti"
+      given-names: "Carlo"
+      email: "carlo.corti@outlook.com"
+  year: 2026
+  doi: "10.5281/zenodo.xxxxxxxx"
+  url: "https://doi.org/10.5281/zenodo.xxxxxxxx"
