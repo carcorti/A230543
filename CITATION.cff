@@ -1,16 +1,17 @@
 cff-version: 1.2.0
-message: "If you use this software or its data, please cite the accompanying article. Metadata is a local draft; the DOI is a placeholder."
+message: "If you use this software or its data, please cite the accompanying article. The DOI identifies the release series; individual deposits have version-specific DOIs."
 type: software
 title: "OEIS A230543: exact extension and homothetic classes"
-version: "v1.0"
+version: "v1.0.1"
+date-released: 2026-10-12
 authors:
   - family-names: "Corti"
     given-names: "Carlo"
     email: "carlo.corti@outlook.com"
 repository-code: "https://github.com/carcorti/A230543"
 license: MIT
-doi: "10.5281/zenodo.xxxxxxxx"
-url: "https://doi.org/10.5281/zenodo.xxxxxxxx"
+doi: "10.5281/zenodo.23311392"
+url: "https://doi.org/10.5281/zenodo.23311392"
 keywords:
   - OEIS A230543
   - arithmetic derivative
@@ -26,5 +27,5 @@ preferred-citation:
       given-names: "Carlo"
       email: "carlo.corti@outlook.com"
   year: 2026
-  doi: "10.5281/zenodo.xxxxxxxx"
-  url: "https://doi.org/10.5281/zenodo.xxxxxxxx"
+  doi: "10.5281/zenodo.23311392"
+  url: "https://doi.org/10.5281/zenodo.23311392"

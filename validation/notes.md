@@ -66,8 +66,9 @@ are for evidence inspection, not an additional public execution interface.
 Original transcripts can mention paths/tools from the development host;
 they are historical provenance, not dependencies of `run.py`.
 
-The manuscript's v1 reviews do not certify the exact revised v2. Reviewer
-conversations and internal manuscript QA reports are private and not copied.
+External scientific review preceded publication-only locator/metadata changes.
+The public source/PDF pair is checked separately. Reviewer conversations and
+internal manuscript QA reports are private and not copied.
 Internal code-review process records are excluded from the curated archive.
 A reviewer-attribution comment in one historical regression driver was replaced
 with a technical description; executable statements remain identical. Its
@@ -78,3 +79,10 @@ and nonregular entries. Directory names are derived from checksummed file
 parents; only a real root `.git/` directory is exempt as provider metadata.
 No full-cap performance, global primitive-form classification, bibliographic
 novelty, public upload or independently repeated full scan is inferred.
+
+The current source is `paper/A230543.tex`, with matching `paper/A230543.pdf`.
+The concept DOI 10.5281/zenodo.23311392 identifies the release series; it is
+separate from the version DOI of any particular deposit. The public runner
+checks PDF framing, author/title metadata, all witness-coordinate values and
+the concept DOI in extracted text. Poppler tools are documented dependencies;
+these mechanical checks supplement visual and settled-compilation QA.

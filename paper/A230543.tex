@@ -8,6 +8,10 @@
 \usepackage{xcolor}
 \usepackage{xurl}
 \usepackage[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{pdftitle={An Exact Local Extension and Homothetic Classes for OEIS A230543},
+  pdfauthor={Carlo Corti}, pdfsubject={Arithmetic derivatives and homothetic classes},
+  pdfkeywords={OEIS A230543, arithmetic derivative, exact computation},
+  pdfcreator={LaTeX with hyperref}}
 \newcommand{\D}{\operatorname{D}}
 \newcommand{\Lrate}{\operatorname{L}}
 \newcommand{\NN}{\mathbb{N}}
@@ -659,9 +663,10 @@ These times exclude development, reviews and audits and are not calendar
 elapsed time. No full-cap timing or unmeasured parallel speedup is inferred.
 
 The retained code, witnesses, raw interval records and independent
-validators are the basis of the local result. The designated repository
-and archive locators in~\cite{project} refer to a planned publication;
-a public release and remote reproduction have not been verified.
+validators are the basis of the local result. The published repository
+and release series in~\cite{project} supply those artifacts. Actual initial
+release payloads from GitHub and Zenodo were downloaded and validated with
+the bounded public suite; this does not repeat the complete negative scan.
 
 \section{Finite auxiliary studies and related predicates}\label{sec:finite}
 \subsection{A bounded seed rectangle}
@@ -899,14 +904,16 @@ $i$ & $n$ & $\D(n)$ & $\D^2(n)$ & $R$\\
 
 \section*{Data availability}
 The indexed prefix, documentary witness table, executed source and build
-instructions, raw sealed coverage records, timing records, finite-study
-data and independent validation scripts are retained locally. A public
-repository and archival deposit, designated in the References, are planned
-but have not been verified as available. The designated archival identifier
-will be replaced after first publication when the author supplies the
-verified official locator. Reproduction of the coverage audit requires the raw records
-and validator dependencies, in addition to the positive witness data;
-the manuscript alone does not replace those artifacts.
+instructions, sealed coverage and timing records, finite-study data and
+package-local validation scripts are publicly available in the GitHub
+repository and Zenodo release series cited in~\cite{project}. The archival identifier cited there is the concept DOI for the release
+series; individual deposited releases have separate version-specific DOIs.
+The package supplies this monolithic source and its matching PDF.
+Reproduction of the coverage audit requires the supplied raw records and
+documented validator dependencies in addition to the positive witness data;
+the manuscript alone does not replace those artifacts. Historical development
+logs are archival evidence, not newly repeated sanitizer certification.
+Private reviewer conversations and third-party full texts are excluded.
 
 \section*{AI use disclosure}
 OpenAI Codex and ChatGPT, Anthropic Claude, Google Gemini, xAI Grok,
@@ -1041,9 +1048,9 @@ Definitions consulted October 9, 2026.
 C. Corti, \emph{An Exact Local Extension and Homothetic Classes for
 OEIS A230543}, GitHub repository and Zenodo archive, 2026.
 \url{https://github.com/carcorti/A230543};
-\url{https://doi.org/10.5281/zenodo.xxxxxxxx}.
-Designated draft locators for the planned publication; the DOI is a
-placeholder and a public release has not been verified.
+\url{https://doi.org/10.5281/zenodo.23311392}.
+The DOI identifies the archived release series; each deposited release has
+a separate version-specific DOI.
 \end{thebibliography}
 \endgroup
 \end{document}

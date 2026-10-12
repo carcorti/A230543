@@ -5,7 +5,7 @@ data/b230543.txt	data/b230543.txt	486	c5faac2e7453b1295c07129005a3b57880ab2a5906
 data/witnesses.tsv	data/witnesses.tsv	1716	4803ca454d7e863ac104d66b75b0c23c8306eb125939c359f5ec16079456c16e
 data/a230543.txt	data/quadruples.txt	1885	ef26aaad8d0398aa5a2ff3d17166b5c463adef0bd9db6d01199308914fa8790b
 data/history/prefix22.txt	data/history/prefix22.txt	224	03efb10156a20d0f04fc7b1ff6f2f6de49b491ae8f7c88482475d61a964e5353
-paper/A230543_v2.tex	paper/A230543_v2.tex	48458	7d07d7df4a2320256c36b2a2a70dc277c62fdff020eabbd3799ad41e797f0c9a
+paper/A230543.tex	paper/A230543.tex	49026	3251811a3d93e1ed7c731313942363b71b9dbfe319ca27fdebfdab4835a74830
 validation/check.py	validation/check.py	10429	3c379e089819915d88e7469b8e5ed9dc3f08a4d813290b746c423648739db443
 validation/reference.tsv	validation/reference.tsv	1114	8c4afc304e17ff381dbd55404c111456cbbee4a749a7b7c389f5d4e1a92ef0ff
 validation/backend_probe.c	validation/backend_probe.c	2035	8eec1d20ab13bbd96684db29caff4912c967e969c32ead46c85fba1193e0950e
@@ -628,3 +628,4 @@ validation/afile_20261009/audit.py	evidence/tests.tar.gz::drivers/attachment.py	
 validation/130_plan_20261009/control.py	evidence/tests.tar.gz::drivers/control13.py	5764	e5a07100cac809007eca06b66e05ce85babc29460af37d7dcb1b86a1bd5ad2b6
 validation/p3_plan_20261007/control.py	evidence/tests.tar.gz::drivers/control11.py	8422	8363ec3d27f0c918f317a424d6df6a02152b4dcdf01a0eb923c26e51d02dfc24
 validation/local_v1/environment.json	evidence/tests.tar.gz::environment.json	5961	b545e1aa32dbd0182dfc67b119015fab31a1a7dc1eaf69e94127a892470e398f
+paper/A230543.pdf	paper/A230543.pdf	407115	69e459cec3cc0cf524b1637572e1262b1359dbf64f4bd8571fcf0716c730f577

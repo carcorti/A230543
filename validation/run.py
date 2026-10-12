@@ -158,7 +158,7 @@ def data_bytes(rows):
 
 
 def manuscript(rows):
-    tex = (ROOT/'paper/A230543_v2.tex').read_text()
+    tex = (ROOT/'paper/A230543.tex').read_text()
     tables = re.findall(r'\\begin\{longtable\}.*?\\end\{longtable\}', tex, re.S)
     require(len(tables)==2, 'two full manuscript tables')
     wr = re.findall(r'^(\d+) & (\d+) & (\d+) & (\d+) & (\d+)\\\\',tables[1], re.M)
@@ -172,7 +172,21 @@ def manuscript(rows):
         expected.append((str(r['i']),str(r['witness'][0]),label,str(r['gcd']),params))
     require(pr == expected, 'manuscript class alignment')
     require(not re.search(r'\\(?:input|include|bibliography)\{', tex) and
-            '10.5281/zenodo.xxxxxxxx' in tex, 'monolithic draft manuscript')
+            'https://doi.org/10.5281/zenodo.23311392' in tex,
+            'monolithic manuscript with designated concept DOI')
+    pdf = ROOT/'paper/A230543.pdf'
+    raw = pdf.read_bytes()
+    require(raw.startswith(b'%PDF-') and b'%%EOF' in raw[-1024:], 'PDF framing')
+    info = command(['pdfinfo', pdf])
+    title = re.search(r'\\title\{([^{}]+)\}', tex).group(1)
+    require(re.search(r'^Author:\s+Carlo Corti\s*$', info, re.M) is not None and
+            re.search(r'^Title:\s+'+re.escape(title)+r'\s*$', info, re.M) is not None,
+            'PDF author/title metadata')
+    text = command(['pdftotext', '-layout', pdf, '-'])
+    numbers = set(re.findall(r'\b\d+\b', text))
+    require(all(str(value) in numbers for row in rows for value in row['witness']) and
+            '10.5281/zenodo.23311392' in text and 'Carlo Corti' in text,
+            'PDF scientific witnesses and concept DOI')
     labels=re.findall(r'\\label\{([^}]+)\}',tex)
     refs=re.findall(r'\\(?:ref|eqref)\{([^}]+)\}',tex)
     bib=re.findall(r'\\bibitem\{([^}]+)\}',tex)
@@ -348,7 +362,7 @@ def main():
         print(json.dumps({'status':'PASS','dependencies':versions,'package_files':count,
               'terms':40,'first_unresolved_index':41,'lower_bound':130000000000,
               'upper_bound':upper[0],'full_negative_independence':False,
-              'limitations':'Accepted 22-row baseline inherited; full native negative coverage conditional; archival development tests not rerun; no official init/next or PDF.'},sort_keys=True),flush=True)
+              'limitations':'Accepted 22-row baseline inherited; full native negative coverage conditional; archival development tests not rerun; no official init/next or PDF generation.'},sort_keys=True),flush=True)
 
 
 if __name__=='__main__':

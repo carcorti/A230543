@@ -1,13 +1,16 @@
 # Local preparation validation
 
-Date: 2026-10-09. Local pre-upload validation; no remote release.
+Date: 2026-10-12. Release v1.0.1 preparation and local pre-upload validation.
+The initial release is public; the current package adds the matching PDF and
+finalizes publication locators. Final distributed verification is separate.
 
 The earlier preflight identified internal process metadata in the test archive
 and an inventory check accepting unexpected empty directories. Both corrections
 were separately authorized and applied: five internal process records were
 excluded, one archival driver comment was normalized, and `run.py` now checks
 the exact directory set as well as files, retaining only root `.git/` metadata.
-The original scientific data, C source, Makefile and manuscript remain unchanged.
+The scientific data, C source and Makefile preserve their executed identities.
+The manuscript changes only publication availability, locators and PDF metadata.
 
 The reconstructed public suite passes against frozen canonical scientific
 inputs using `python3 -B validation/run.py`, including under optimized Python
@@ -43,10 +46,11 @@ framing. The sole public b-file has indices 1..40 and its first 22 terms agree
 with the explicitly historical accepted prefix. Full negative coverage
 remains conditional on the C implementation and inherited baseline.
 
-The unchanged TeX v2 passed three pdfTeX draftmode passes, with zero errors,
-undefined references, overfull/underfull boxes or warnings and no PDF generated.
-Its two complete scientific tables agree with the public data. Visual page QA
-was not performed. Manuscript policy audit passed all 14 gates.
+The monolithic `paper/A230543.tex` produces `paper/A230543.pdf` with three
+pdfTeX passes. The settled log has zero errors, undefined references, box
+diagnostics or warnings. Every rendered page, metadata, extracted scientific
+text and links are checked. The two complete scientific tables agree with the
+public data. Manuscript policy remains applicable to the finalized locators.
 CITATION.cff passed CFF 1.2.0 schema validation. PERSONAL IDENTITY PASS was
 established from the mutually consistent current manuscript author, source
 copyright and existing author-supplied MIT LICENSE: Carlo Corti. The license
@@ -55,7 +59,8 @@ was preserved, not recreated. Third-party bibliographic authors are separate.
 Public source and Makefile retain stable unversioned names and are
 byte-identical to the executed source/build, so their documentary/path diff
 is empty. Serialization magic-number suffixes denote formats, not lifecycle
-versions. No frozen production source, working data or manuscript was altered.
+versions. No frozen production source or working data was altered. The manuscript
+publication changes do not alter the mathematical sections or tables.
 Archive curation changed only the publication subset and the comment described
 above; private originals and their historical evidence remain unchanged. Original member identities and renamed archive mappings are in
 `docs/origins.tsv`; complete public inventory hashes are in `SHA256SUMS`.
@@ -67,12 +72,14 @@ byte-identical reproducibility copy is `data/quadruples.txt`. A proposed later
 OEIS description is "Carlo Corti, Table of n, D(n), D^2(n) and the diagonal
 for indices 1 through 40". No editorial upload or entry change occurred.
 
-CITATION.cff reserves v1.0, repository https://github.com/carcorti/A230543,
-and intentional DOI placeholder 10.5281/zenodo.xxxxxxxx, consistently with
-the manuscript. Release date is omitted because no release exists yet.
+CITATION.cff identifies release v1.0.1, repository https://github.com/carcorti/A230543,
+and series concept DOI 10.5281/zenodo.23311392, consistently with the TeX and PDF.
+The target release date is October 12, 2026. Each deposited version receives a
+separate version-specific DOI; none is guessed before deposit publication.
 Private reviews, obsolete drafts, caches, redundant binary variants and
 third-party full texts are excluded; acquisitions/limitations are documented.
 
 The local preparation record and exact command logs remain outside the public
-payload. Publication, DOI assignment and distributed-release verification
-remain pending. Local pre-upload readiness grants no publication authority.
+payload. Pre-upload simulations do not replace post-release downloads from
+both providers. Publication authority and per-release Zenodo synchronization
+confirmation remain separate from numerical validation.

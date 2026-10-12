@@ -1,11 +1,13 @@
 # OEIS A230543
 
-Carlo Corti — local publication draft, October 2026.
+Carlo Corti — research package, release v1.0.1, October 2026.
 
-**Local pre-upload candidate.** The package excludes internal review metadata
-and validates the exact file and directory inventory. Repository and DOI
-locators remain prospective; no upload, release or remote reproduction is
-claimed.
+Repository: [carcorti/A230543](https://github.com/carcorti/A230543).
+Release-series concept DOI: [10.5281/zenodo.23311392](https://doi.org/10.5281/zenodo.23311392).
+Each deposited release has a separate version DOI for exact provenance.
+The source and PDF use stable sequence-based names; release identifiers apply
+to the package. The package excludes internal review metadata and validates the
+exact file and directory inventory.
 
 A230543 lists increasing integers `n >= 2` with positive arithmetic derivatives
 `D(n)` and `D(D(n))` such that `n^2 + D(n)^2 + D(D(n))^2` is a square.
@@ -34,7 +36,7 @@ The cap describes numerical capacity, not completed coverage.
 | `data/quadruples.txt` | Same witnesses in the original commented documentary format |
 | `data/forms.tsv` | Primitive coordinates, gcd, rational rate, scale core, degree and prime parameters |
 | `data/history/prefix22.txt` | Explicitly historical accepted baseline, not a competing current b-file |
-| `paper/A230543_v2.tex` | Unmodified current English monolithic manuscript, inline bibliography |
+| `paper/A230543.tex`, `paper/A230543.pdf` | English monolithic manuscript with inline bibliography and matching PDF |
 | `validation/run.py` | Reconstructed fail-closed public validation command |
 | `validation/check.py`, `validation/reference.tsv` | Unchanged independent trial-division oracle and 30 fixtures |
 | `validation/backend_probe.c` | Unchanged C white-box wrapper, shared production backend |
@@ -42,14 +44,14 @@ The cap describes numerical capacity, not completed coverage.
 | `evidence/*.tar.gz` | Separate compact build, campaign, scientific and development evidence |
 | `docs/origins.tsv`, `docs/archives.tsv` | Source-to-package aliases, original member hashes and sizes |
 | `docs/sources.md`, `docs/cli.md` | Source acquisition/build requirements and exact CLI |
-| `CITATION.cff`, `LICENSE`, `SHA256SUMS`, `.gitignore` | Draft citation, existing MIT license, inventory and generated-file exclusions |
+| `CITATION.cff`, `LICENSE`, `SHA256SUMS`, `.gitignore` | Citation metadata, existing MIT license, inventory and generated-file exclusions |
 
 ## Build and verify
 
 Tested on x86_64 Linux, Python 3.12.3, GCC 13.3.0, GMP 6.3.0,
 OpenSSL 3.0.13, GNU OpenMP and SymPy 1.12. The original executable also needs
 its Linux/glibc ABI. Install GCC/make, GMP and OpenSSL development packages,
-`pkg-config`, and Python with `sympy==1.12`; see `docs/sources.md`.
+`pkg-config`, Poppler tools (`poppler-utils`), and Python with `sympy==1.12`; see `docs/sources.md`.
 
 ```sh
 make -C src
@@ -60,8 +62,8 @@ python3 -B validation/run.py
 The public command uses only this package, checks the exact file/directory inventory and all
 archive members, extracts and builds in temporary directories, and exits
 nonzero at a mismatch. It runs bounded arithmetic, native witness replay and
-backend tests. It executes no `init`/`next`, full negative campaign or PDF
-creation. Expect stage PASS lines and a final JSON `status: PASS`.
+backend tests, plus PDF metadata and witness-text checks. It executes no
+`init`/`next` or full negative campaign and does not rebuild the PDF. Expect stage PASS lines and a final JSON `status: PASS`.
 The complete suite can take several minutes. It also works under a renamed
 clone/extraction root and ignores only root `.git/` provider metadata.
 Use `python3 -B -O validation/run.py` for the same shared implementation under
@@ -80,13 +82,17 @@ b-file preserve the author's required final empty record (`LF LF`).
 
 ## Manuscript and evidence
 
-`paper/A230543_v2.tex` needs no external bibliography or images. Its build
-requirements and a PDF-suppressed syntax check are in `docs/sources.md`.
-No PDF is included. The filename retains `v2`, and the intentional DOI sentinel
-is `10.5281/zenodo.xxxxxxxx`. `CITATION.cff` reserves first-release version
-`v1.0`; it has no release date because no release has occurred.
+`paper/A230543.tex` needs no external bibliography or images. The matching
+`paper/A230543.pdf` is included and checksummed. Build requirements and the
+three-pass PDF rebuilding command are in `docs/sources.md`; build outputs go
+outside the package. The published PDF was checked for settled compilation
+errors/warnings, every rendered page, metadata, text and links.
+`CITATION.cff` identifies package release v1.0.1 and uses the concept DOI for
+series citation. Version-specific deposited bytes are identified separately
+in each release's Zenodo record.
 
-The archives retain original bytes under short aliases. Inspect or unpack:
+The archives retain evidence under short aliases; the comment-only curation
+described below is the sole retained-member byte change. Inspect or unpack:
 
 ```sh
 tar -tzf evidence/studies.tar.gz

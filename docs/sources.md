@@ -5,16 +5,21 @@ with LaTeX packages `fontenc`, `inputenc`, `lmodern`, `geometry`, `amsmath`,
 `amssymb`, `amsthm`, `booktabs`, `longtable`, `array`, `xcolor`, `xurl`, and
 `hyperref`. A Debian/Ubuntu TeX Live installation with `texlive-latex-base`,
 `texlive-latex-recommended`, `texlive-latex-extra`, and `lmodern` supplies them.
-To check syntax without producing a PDF, from the package root:
+To rebuild the PDF from the package root:
 
 ```sh
 mkdir -p /tmp/a230543-tex
-pdflatex -draftmode -interaction=nonstopmode -halt-on-error -output-directory=/tmp/a230543-tex paper/A230543_v2.tex
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp/a230543-tex paper/A230543.tex
 ```
 
-Repeat that exact command three times to settle cross-references. Auxiliary
-outputs go outside the package. This is syntax/reference QA; visual page QA
-requires separate authorization to generate a PDF.
+Repeat that exact command three times to settle cross-references. The resulting
+PDF and all auxiliary outputs stay outside the package. Inspect the final
+`A230543.log` for errors, warnings, undefined references and box diagnostics;
+inspect the rendered pages before replacing the supplied PDF. A rebuild can
+have different PDF bytes because of PDF timestamps and identifiers, even with
+identical scientific content; `SHA256SUMS` binds the supplied publication PDF.
+The public validator uses `pdfinfo` and `pdftotext` from `poppler-utils` to check
+the supplied PDF's author/title, scientific witness values and concept DOI.
 
 The production build uses the unchanged strict Makefile, GCC with GNU unsigned
 128-bit integers, POSIX files/locks/signals, OpenMP, GMP and OpenSSL EVP hashes.
@@ -37,7 +42,7 @@ permission has not been established. Obtain them through these primary locators:
 | [Forišek–Jančina (2015)](https://ceur-ws.org/Vol-1326/020-Forisek.pdf) | Deterministic seven-base test below 2^64, Section 1.4/Theorem 3 |
 | [Pollard (1975)](https://pages.cs.wisc.edu/~cs812-1/pollardrho.pdf) | Factor finding; heuristic speed separated from deterministic fallback |
 | [GNU MP integer roots](https://gmplib.org/manual/Integer-Roots) | Exact square predicate and roots, manual version 6.3.0 |
-| [Tossavainen et al. (2024)](https://doi.org/10.1080/07468342.2023.2268494) | Historical/expository context; author-uploaded full text consulted during v2 revision |
+| [Tossavainen et al. (2024)](https://doi.org/10.1080/07468342.2023.2268494) | Historical/expository context; author-uploaded full text consulted during manuscript review |
 | [Hoepli book](https://www.hoepli.it/libro/la-derivata-aritmetica-/9788820358648.html) | Publisher metadata only; full book not consulted |
 
 The other Balzarotti–Lava volume, Sandit ISBN 9788869287480, was consulted
